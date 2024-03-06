@@ -36,7 +36,7 @@ func TestPodziel(t *testing.T) {
 	}
 }
 
-func TestAddIfIn(t *testing.T) {
+func TestIncrementIfBothIn(t *testing.T) {
 	words := map[string]bool{
 		"akt": true,
 		"or":  true,
@@ -56,7 +56,7 @@ func TestAddIfIn(t *testing.T) {
 	}
 	for _, d := range data {
 		got := map[string]int{}
-		AddIfIn(d.in, words, &got)
+		IncrementIfBothIn(d.in, words, &got)
 		if !reflect.DeepEqual(got, d.want) {
 			t.Errorf("got %#v; want %#v", got, d.want)
 		}
