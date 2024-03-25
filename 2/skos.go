@@ -183,36 +183,12 @@ VALUES (?,?,?,?,?,?,?,?)`, ToAnySlice(ColumnNames)...)
 			ss := ASCIIStringToASCIIStemSlice(as, c != Piętro)
 			stems = append(stems, ss...)
 		}
-		// Zadanie 6.
-		//
-		// Jeśli row[Jednostka] zaczyna się od łańcucha "Wydział ", to:
-		// 1. Podziel row[Jednostka] na części rozdzielone przecinkami,
-		//    po których następuje wyraz nie zakończony na -i ani na -y
-		// 2. Zamień zerową otrzymaną część row[Jednostka] na wartość
-		//    typu ASCIIString
-		// 3. Zamień otrzymaną wartość typu ASCIIString na wycinek
-		//    zawierający wartości typu ASCIIStem, nie usuwając żadnych
-		//    tematów wyrazów i połącz pierwsze litery wartości z tego
-		//    wycinka w łańcuch
-		// 4. Zamień otrzymaną wartość typu ASCIIString na wycinek
-		//    zawierający wartości typu ASCIIStem, usuwając takie
-		//    tematy wyrazów, które można pomylić z innymi wyrazami
-		//    z ich tematami, i połącz pierwsze litery wartości z tego
-		//    wycinka w łańcuch
-		// 5. Dodaj do wycinka stems łańcuchy otrzymane w punktach
-		//    3 i 4
-		//
-		// Przykład:
-		//
-		// Jeśli row[Jednostka] ==
-		// "Wydział Geologii, Geofizyki i Ochrony Środowiska, Dziekanat"
-		// to dodaj do wycinka stems łańcuchy "wggios" i "wggos"
-		//
-		// Wskazówki:
-		//
-		// + Proszę odkomentować funkcję TestAbbreviateFacultyName
-		//   w pliku transform_test.go
-		// + Polecenie "go doc strings" jest państwa przyjacielem
+		if strings.HasPrefix(row[Jednostka], "Wydział ") {
+			stems = append(stems,
+				AbbreviateFacultyName(row[Jednostka], true))
+			stems = append(stems,
+				AbbreviateFacultyName(row[Jednostka], false))
+		}
 		ExecuteStatement(insertFTSStmt, rowid, JoinASCIIStems(stems))
 	}
 	CommitTransaction(tx)
@@ -248,14 +224,29 @@ func GetColumnsOfStems(db *sql.DB) map[ASCIIStem]map[ColumnName]bool {
 			// Nie usuwaj piętra I
 			stems := ASCIIStringToASCIIStemSlice(as, c != Piętro)
 			for _, stem := range stems {
-				if ret[stem] == nil {
-					ret[stem] = map[ColumnName]bool{}
-				}
-				ret[stem][c] = true
+				AddStemColumn(&ret, stem, c)
 			}
 		}
 	}
+	rows = Query(db, `SELECT dane FROM PracownicyFTS`)
+	for rows.Next() {
+		var dane string
+		ScanRow(rows, &dane)
+		stems := strings.Fields(dane)
+		for _, stem := range stems {
+			AddStemColumn(&ret, ASCIIStem(stem), Jednostka)
+		}
+	}
 	return ret
+}
+
+// ADDStemColumn dodaje temat `s` i kolumnę `c` do mapy `m`
+func AddStemColumn(
+	m *map[ASCIIStem]map[ColumnName]bool, s ASCIIStem, c ColumnName) {
+	if (*m)[s] == nil {
+		(*m)[s] = map[ColumnName]bool{}
+	}
+	(*m)[s][c] = true
 }
 
 // Wyrazy, które zmieniają
@@ -381,13 +372,13 @@ func ExecuteQuery(q string, cols []ColumnName, db *sql.DB) [][]string {
 	for _, c := range cols {
 		ret = append(ret, []string{string(c)})
 	}
-	row, arg := MakeStringSliceAndAnySlice(len(cols))
+	row, args := MakeStringSliceAndAnySlice(len(cols))
 	rows, err := db.Query(q)
 	if err != nil {
 		log.Fatal(err)
 	}
 	for n := 1; rows.Next(); n++ {
-		err := rows.Scan(arg...)
+		err := rows.Scan(args...)
 		if err != nil {
 			log.Fatal(err)
 		}

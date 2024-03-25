@@ -149,7 +149,6 @@ func TestASCIIStringToASCIIStemSlice(t *testing.T) {
 	}
 }
 
-/* Zadanie dodatkowe
 func TestAbbreviateFacultyName(t *testing.T) {
 	data := []struct{
 		in string
@@ -178,4 +177,3 @@ func TestAbbreviateFacultyName(t *testing.T) {
 		}
 	}
 }
-*/

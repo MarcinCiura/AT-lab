@@ -10,8 +10,12 @@ import (
 	"unicode"
 )
 
-// W tym pliku jest 5 zadań. Żeby rozwiązać każde z tych zadań,
-// proszę napisać właściwy regexp i poprawnie go użyć.
+// W tym pliku jest 6 zadań. Zadania 1-5 trzeba rozwiązać. Zadanie 6
+// jest nieobowiązkowe. Do każdego zadania są przygotowane testy.
+// Proszę testować swoje poprawki, wydając polecenie "go test"
+//
+// Żeby rozwiązać każde z zadań 1-5, proszę zmienić program w 2
+// miejscach: napisać właściwy regexp i użyć go w kodzie programu.
 
 var (
 	// Pasuje do takich numerów telefonów stacjonarnych, które
@@ -21,12 +25,14 @@ var (
 	phone2322 = regexp.MustCompile(
 		`(\+48 *)?(12|91)[ -]*(\d\d\d)[ -]*(\d\d)[ -]*(\d\d)`)
 	// Pasuje do takich numerów telefonów komórkowych, których
-	// cyfry są podawane po trzy
+	// cyfry są podawane po trzy: 500-111-222
 	phone333 = regexp.MustCompile(
 		`(\+48 *)?(\d\d\d)[ -]*(\d\d\d)[ -]*(\d\d\d)`)
 	// Pasuje do takich numerów telefonów komórkowych, których
-	// cyfry są podawane po dwie
-	phone3222 = regexp.MustCompile(``) // Zadanie 1
+	// cyfry są podawane najpierw po trzy, a potem po dwie:
+	// 500-11-12-22
+	phone3222 = regexp.MustCompile(``) // Zadanie 1. Proszę
+	// użyć regexpa `phone3222` poniżej
 )
 
 // TransformPhoneNumbers przekształca wszystkie numery telefonów w
@@ -34,7 +40,9 @@ var (
 func TransformPhoneNumbers(s string) string {
 	s = phone2322.ReplaceAllString(s, "${2}-${3}-${4}-${5}")
 	s = phone333.ReplaceAllString(s, "${2}-${3}-${4}")
-	s = "" // Zadanie 1
+	s = s // Zadanie 1. Wskazówka: aby przekształcić format 12-34-56
+	// na format 123-456, proszę dopasować cyfry 3 i 4 do dwóch
+	// osobnych grup
 	return s
 }
 
@@ -72,18 +80,22 @@ var (
 	// Pasuje do rzeczowników zakończonych na -dzie, np. "Alfredzie"
 	reDzieD = regexp.MustCompile("^(.+)dzie$")
 	// Pasuje do rzeczowników zakończonych na -ce, np. "Monice"
-	reCeK = regexp.MustCompile("x") // Zadanie 2
+	reCeK = regexp.MustCompile("x") // Zadanie 2. Proszę użyć regexpa
+	// `reCeK` poniżej
 	// Pasuje do przymiotników zakończonych na -cy, np. "Kowalscy"
 	reCyK = regexp.MustCompile("^(.+)cy$")
 	// Pasuje do rzeczowników zakończonych na -dze i -dzy,
 	// np. "koledze" i "koledzy"
-	reDzeG = regexp.MustCompile("x") // Zadanie 3
+	reDzeG = regexp.MustCompile("x") // Zadanie 3. Proszę użyć regexpa
+	// `reDzeG` poniżej
 	// Pasuje do rzeczowników zakończonych na -rze i -rzy,
 	// np. "Piotrze" i "doktorzy"
-	reRzeR = regexp.MustCompile("x") // Zadanie 4
+	reRzeR = regexp.MustCompile("x") // Zadanie 4. Proszę użyć regexpa
+	// `reRzeR` poniżej
 	// Pasuje do rzeczowników zakończonych na -cień,
 	// np. "Kwiecień" i "Pierścień"
-	reCień = regexp.MustCompile("x") // Zadanie 5
+	reCień = regexp.MustCompile("x") // Zadanie 5. Proszę użyć regexpa
+	// `reCień` poniżej
 	// Pasuje do rzeczowników zakończonych na -dziec i -dzień,
 	// np. "Dudziec", "Grudzień" i "Moździeń"
 	reDzieCŃ = regexp.MustCompile("^(.+d)zie([cn])$")
@@ -212,4 +224,73 @@ func ASCIIStringToASCIIStemSlice(as ASCIIString, rmStopwords bool) []ASCIIStem {
 		}
 	}
 	return ret
+}
+
+// Dodatkowe zadanie 6.
+//
+// Odpowiedź na pytanie "Kto pracuje na Wydziale Informatyki" zawiera
+// dane takich osób, które pracują na:
+// + Wydziale Informatyki
+// + Wydziale Inżynierii Metali i Informatyki Przemysłowej
+// + Wydziale Elektrotechniki, Automatyki, Informatyki i Inżynierii
+//   Biomedycznej
+// + Wydziale Informatyki, Elektroniki i Telekomunikacji
+// + Wydziale Fizyki i Informatyki Stosowanej
+//
+// Cel zadania 6.: użytkownik może wyszukiwać pracowników, podając
+// skróty nazw wydziałów. Sposób skracania nazw wydziałów AGH nie jest
+// ustalony. Dlatego program ma tworzyć skróty nazw wydziałów zarówno
+// usuwając z tych nazw spójnik "i", jak i nie usuwając go
+//
+// Jeśli w nazwie wydziału AGH występuje przecinek, to po tym
+// przecinku w nazwie wydziału zawsze następuje taki wyraz, który
+// kończy się na -i lub na -y, np. "Informatyki". Jeśli po przecinku
+// następuje taki wyraz, który nie kończy się na -i ani na -y, np.
+// "Katedra", to znaczy, że ten przecinek oddziela nazwę wydziału od
+// nazwy części tego wydziału
+//
+// Kroki rozwiązania zadania 6.:
+//
+// Wewnątrz funkcji AbbreviateFacultyName poniżej:
+//
+// 1. Podziel łańcuch `name` na części rozdzielone przecinkami, po
+// których następuje taki wyraz, który nie kończy się ani na -i, ani
+// na -y. Jeśli w łańcuchu `name` nie ma takich przecinków, użyj
+// całego łańcucha `name`. Polecam regexp pokazany na 115. slajdzie z
+// wykładu
+//
+// 2. Zamień zerową otrzymaną część łańcucha `name` na taki łańcuch,
+// który zawiera tylko małe litery bez znaków diakrytycznych.
+// Skorzystaj z funkcji `ToASCIIString`
+//
+// 3. Podziel otrzymany łańcuch na wyrazy i usuń końcówki tych
+// wyrazów, zostawiając tematy tych wyrazów. Służy do tego funkcja
+// `ASCIIStringToASCIIStemSlice`. Albo usuń spójnik "i", albo go nie
+// usuwaj. W tym celu przekaż argument `rmStopwords` jako drugi
+// argument funkcji `ASCIIStringToASCIIStemSlice`
+//
+// 4. Połącz pierwsze znaki otrzymanych tematów wyrazów tak, żeby
+// powstał skrót nazwy `name`
+//
+// Przykład:
+//
+// Jeśli name == "Wydział Geologii, Geofizyki i Ochrony Środowiska,
+// Dziekanat", to wynikiem funkcji AbbreviateFacultyName ma być skrót
+// "wggios" lub skrót "wggos", w zależności od tego, czy argument
+// `rmStopwords` ma wartość `false` czy `true`
+//
+// Jeśli polecenie "go test" zakończyło się pomyślnie, skompiluj
+// program "skos", wydając polecenie "make", uruchom program "skos" z
+// argumentem "-init" (napisz 1 minus przed "init") i zadaj pytanie o
+// osoby z WI
+//
+// Gratuluję rozwiązania wszystkich zadań :-)
+
+// AbbreviateFacultyName skraca nazwę wydziału `name`. Jeśli
+// `rmStopwords` ma wartość `false`, skrót zawiera pierwsze litery
+// wszystkich tych wyrazów, które wchodzą w skład `name`. Jeśli
+// `rmStopwords` ma wartość `true`, skrót zawiera pierwsze litery
+// wszystkich tych wyrazów oprócz spójników "i"
+func AbbreviateFacultyName(name string, rmStopwords bool) ASCIIStem {
+	return ASCIIStem("")
 }
