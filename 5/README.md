@@ -29,7 +29,7 @@ mitochondrialnym kręgowców. Kod mitochondrialny kręgowców to reguły
 tłumaczenia informacji genetycznej zawartej w mitochondrialnym DNA
 (mDNA) na białka niezbędne do funkcjonowania mitochondriów.
 
-![Kod mitochondrialny kręgowców](5/MGA2-03-28_mtDNA_code.jpg)
+![Kod mitochondrialny kręgowców](MGA2-03-28_mtDNA_code.jpg)
 Diagram pochodzi ze strony https://www.mun.ca/biology/scarr/MtDNA_code.html;
 został opracowany na podstawie © Griffiths et al. 2004
 
