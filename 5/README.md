@@ -127,10 +127,12 @@ odpowiedniego wiersza arkusza http://tiny.cc/at-lab5-2024
 ## Testy jednostkowe
 
 Podczas tej części zajęć opracują państwo testy jednostkowe i testy
-wydajnościowe pakietów `github.com/mh739025250/suffix` i
-`index/suffixarray`. Pakiet `github.com/mh739025250/suffix`
-implementuje drzewa sufiksów, a pakiet `index/suffixarray`
-implementuje tablice sufiksów.
+wydajnościowe:
+* pakietu `github.com/MarcinCiura/AT-lab/5/suffixarray`, który implementuje
+  prosty algorytm tworzenia tablic sufiksów
+* pakietu `index/suffixarray`, który implementuje algorytm tworzenia
+  tablic sufiksów przez indukowane sortowanie; autorami tego algorytmu
+  są See Ge Nong, Sen Zhang i Wai Hong Chen
 
 1. Geny mitochondrialnego DNA kręgowców
 składają się kolejno z:
@@ -244,10 +246,10 @@ bajty := []byte(łańcuch)
 ## Testy wydajnościowe
 
 1. Proszę opracować testy wydajnościowe:
-* pakietu **github.com/BobuSumisu/aho-corasick**
-* pakietu **github.com/MarcinCiura/AT-lab/5/suffixarray**, który implementuje
+* pakietu `github.com/BobuSumisu/aho-corasick`
+* pakietu `github.com/MarcinCiura/AT-lab/5/suffixarray`, który implementuje
   prosty algorytm tworzenia tablic sufiksów
-* pakietu *index/suffixarray**, który implementuje algorytm tworzenia
+* pakietu `index/suffixarray`, który implementuje algorytm tworzenia
   tablic sufiksów przez indukowane sortowanie; autorami tego algorytmu
   są See Ge Nong, Sen Zhang i Wai Hong Chen
 
