@@ -175,7 +175,8 @@ do pliku `geny.txt`
 Polecenie `sort -u` wypisuje do wyjścia 1 kopię każdego wiersza
 wejścia. Dodatkowo sortuje te wiersze w porządku leksykograficznym.
 
-1. Proszę opracować test jednostkowy pakietu **index/suffixarray**
+1. Proszę opracować test jednostkowy pakietu
+`github.com/MarcinCiura/AT-lab/5/suffixarray`
 
 W teście należy:
 
