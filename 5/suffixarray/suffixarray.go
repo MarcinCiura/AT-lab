@@ -27,13 +27,15 @@ func sortedSuffixes(text []byte) []suffix {
 	return suffixes
 }
 
-// Index implementuje indeks tekstu `text`
+// Index implementuje indeks łańcucha `text`. Ten indeks
+// składa się z tablicy sufiksów łańcucha `text`
+// i z łańcucha `text`
 type Index struct {
 	suffixes []int
 	text     []byte
 }
 
-// New zwraca tablicę sufiksów łańcucha `text`
+// New zwraca indeks łańcucha `text`
 func New(text []byte) Index {
 	index := Index{
 		make([]int, len(text)),
