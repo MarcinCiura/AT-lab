@@ -300,6 +300,31 @@ należy wpisać **867**
 
 # Zadanie 2
 
-Proszę napisać program, który znajduje najdłuższą sekwencję DNA
-mitochondrialnego wspólną dla wszystkich zwierząt wybranych przez
+Proszę napisać program, który znajduje wszystkie sekwencje DNA
+mitochondrialnego wspólne dla wszystkich zwierząt wybranych przez
 osoby z państwa grupy :-)
+
+Program ma wypisać tyle wierszy, ile znajdzie wspólnych sekwencji DNA.
+W każdym wierszu ma wypisać kolejno: długość wspólnej sekwencji DNA,
+znak spacji, wspólną sekwencję DNA
+
+Wynik działania programu można obejrzeć, wydając polecenie
+
+```
+./nazwa_programu | sort -k1 -n -r | less
+```
+
+Polecenie `sort -k1 -n -r` sortuje wejście według kluczy zawartych w
+1. kolumnie, porównując te klucze jako liczby całkowite, i wypisuje
+wynik w kolejności od większych do mniejszych kluczy
+
+Wyniki działania programu można sprawdzić, kopiując dowolną wspólną
+sekwencję DNA do schowka i wydając polecenie
+
+```
+grep -l skopiowana_sekwencja_DNA *.txt
+```
+
+Opcja `-l` oznacza: wypisz nazwy tych plików, których zawartość pasuje
+do danego regexpa, ale nie wypisuj wierszy, które pasują do tego
+regexpa
