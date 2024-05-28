@@ -8,6 +8,9 @@
 *.so
 *.dylib
 
+# Emacs backup files
+*~
+
 # Test binary, built with `go test -c`
 *.test
 

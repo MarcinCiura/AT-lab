@@ -302,7 +302,8 @@ należy wpisać **867**
 
 Proszę napisać program, który znajduje wszystkie sekwencje DNA
 mitochondrialnego wspólne dla wszystkich zwierząt wybranych przez
-osoby z państwa grupy :-)
+osoby z państwa grupy. Podkreślam, że chodzi o sekwencje DNA, a nie
+o geny :-)
 
 Program ma wypisać tyle wierszy, ile znajdzie wspólnych sekwencji DNA.
 W każdym wierszu ma wypisać kolejno: długość wspólnej sekwencji DNA,
