@@ -72,7 +72,7 @@ func New(text []byte) *Index {
 		ix.addChar(c)
 	}
 	ix.addSuffixStartToLeaves(ix.root, len(text))
-	return st
+	return ix
 }
 
 func (ix *Index) addSuffixStartToLeaves(v int, suffixStart int) {
