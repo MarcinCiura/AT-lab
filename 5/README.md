@@ -2,9 +2,10 @@
 
 ## Wprowadzenie
 
-DNA, czyli kwas dezoksyrybonukleinowy, zawiera instrukcje syntezy
-białek. Łańcuchy DNA składają się z *nukleotydów*. Nukleotydy
-występują w 4 rodzajach. Sekwencję nukleotydów nazywamy *genem*.
+DNA, czyli kwas dezoksyrybonukleinowy, zawiera informacje o tym, jak
+budować białka. Łańcuchy DNA składają się z *nukleotydów*. Nukleotydy
+występują w 4 rodzajach. Sekwencję nukleotydów, w której są zakodowane
+informacje o tym, jak zbudować 1 białko, nazywamy *genem*.
 
 *Kod genetyczny* to reguły tłumaczenia dowolnej sekwencji nukleotydów
 na sekwencję aminokwasów w białku. Symbolami kodu genetycznego są
